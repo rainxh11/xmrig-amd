@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 2.8)
 project(xmrig-amd)
 
 option(WITH_AEON      "CryptoNight-Lite support" ON)
-option(WITH_SUMO      "CryptoNight-Heavy support" ON)
-option(WITH_HTTPD     "HTTP REST API" ON)
+option(WITH_SUMO      "CryptoNight-Heavy support" OFF)
+option(WITH_HTTPD     "HTTP REST API" OFF)
 option(WITH_DEBUG_LOG "Enable debug log output" OFF)
-option(WITH_TLS       "Enable OpenSSL support" ON)
+option(WITH_TLS       "Enable OpenSSL support" OFF)
 option(STRICT_CACHE   "Enable strict checks for OpenCL cache" ON)
-option(BUILD_STATIC   "Build static binary" OFF)
+option(BUILD_STATIC   "Build static binary" ON)
 
 include (CheckIncludeFile)
 include (cmake/cpu.cmake)
@@ -197,12 +197,6 @@ add_definitions(/DCL_USE_DEPRECATED_OPENCL_1_2_APIS)
 
 
 include(cmake/OpenSSL.cmake)
-
-CHECK_INCLUDE_FILE (syslog.h HAVE_SYSLOG_H)
-if (HAVE_SYSLOG_H)
-    add_definitions(/DHAVE_SYSLOG_H)
-    set(SOURCES_SYSLOG src/common/log/SysLog.h src/common/log/SysLog.cpp)
-endif()
 
 if (STRICT_CACHE)
     add_definitions(/DXMRIG_STRICT_OPENCL_CACHE)
